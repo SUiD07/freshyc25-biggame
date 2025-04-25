@@ -138,7 +138,7 @@ export default function Home() {
       </div>
 
       {/* 📋 Table Section */}
-      <div className="py-4 max-w-[1000px] w-full overflow-auto mx-auto">
+      <div className="py-4 max-w-[900px] w-full overflow-auto mx-auto">
         <table className="whitespace-nowrap min-w-full border-collapse border border-gray-300">
           <thead className="bg-gray-100">
             <tr>
@@ -154,7 +154,7 @@ export default function Home() {
             {nodes.map((node, index) => (
               <tr key={index}>
                 <td className="border px-4 py-2">{node.id}</td>
-                <td className="border px-4 py-2 w-14">
+                <td className="border px-4 py-2">
                   <input
                     type="text"
                     className="input border px-2 py-1 w-full"
@@ -194,7 +194,7 @@ export default function Home() {
                     ))}
                   </div>
                 </td>
-                <td className="w-14">
+                <td>
                   {/* Select สำหรับเลือกบ้านที่จะเพิ่มเรือจาก */}
                   <select
                     className="select border px-2 py-1 w-full"

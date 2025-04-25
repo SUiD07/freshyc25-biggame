@@ -6,7 +6,7 @@ export const initialNodes = [
       top: "45%",
       left: "30%",
       tower: false,
-      ship: null,
+      ship: [] as string[]
     },
     {
       id: "Node 2",
@@ -15,7 +15,7 @@ export const initialNodes = [
       top: "60%",
       left: "50%",
       tower: false,
-      ship: null,
+      ship: [] as string[]
     },
     {
       id: "Node 3",
@@ -24,7 +24,7 @@ export const initialNodes = [
       top: "20%",
       left: "70%",
       tower: false,
-      ship: null,
+      ship: [] as string[]
     },
   ];
   
