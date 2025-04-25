@@ -48,7 +48,7 @@ export default function Home() {
         node.id === id
           ? {
               ...node,
-              ship: node.ship ? [...node.ship, `Ship ${node.ship.length + 1} from ${selectedCar}`] : [`Ship 1 from ${selectedCar}`],
+              ship: node.ship ? [...node.ship, `${selectedCar}`] : [`Ship 1 from ${selectedCar}`],
             }
           : node
       )
@@ -86,6 +86,23 @@ export default function Home() {
             className="inline-block w-[90%] h-auto"
           />
         </div>
+        {nodes.map((node, index) => (
+          <div
+            key={index}
+            style={{
+              backgroundColor: houseColorMap[node.selectedCar] || "transparent",
+              fontSize: "1vw",
+              padding: "0.5em",
+              borderRadius: "0.5em",
+              whiteSpace: "nowrap",
+              top: node.top,
+              left: node.left,
+            }}
+            className="absolute p-2 rounded-md transform -translate-x-1/2 -translate-y-1/2 text-[clamp(10px,2.5vw,16px)]"
+          >
+            {node.value} ({node.selectedCar})
+          </div>
+        ))}
 
         {nodes.map((node) => (
           <React.Fragment key={node.id}>
@@ -116,11 +133,11 @@ export default function Home() {
                   transform: "translate(-50%, -50%)",
                 }}
               >
-                <div className="text-center text-white text-xs">{ship}</div>
+                <div className="text-center text-black text-xs">{ship}</div>
               </div>
             ))}
             {/* ข้อความใต้ภาพเรือ */}
-            {node.ship && node.ship.map((ship, index) => (
+            {/* {node.ship && node.ship.map((ship, index) => (
               <div
                 key={index}
                 className="absolute"
@@ -130,9 +147,9 @@ export default function Home() {
                   transform: "translate(-50%, -50%)",
                 }}
               >
-                <p className="text-white text-xs">{ship}</p>
+                <p className="text-black text-xs">{ship}</p>
               </div>
-            ))}
+            ))} */}
           </React.Fragment>
         ))}
       </div>
