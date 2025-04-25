@@ -1,20 +1,10 @@
 "use client";
 import { useState } from "react";
 import React from "react";
+import { initialNodes } from "./constants/node";
 
-// import { nodeList } from "./constants/node";
 export default function Home() {
-  const count = 5; //////////
-  const [value1, setValue1] = useState("0");
-  // const [value2, setValue2] = useState("0");
-  // const [value3, setValue3] = useState("0");
-
-  const [selectedCar, setSelectedCar] = useState<string>("");
-
-  // ฟังก์ชันสำหรับจัดการการเปลี่ยนแปลงของการเลือก
-  const handleCarChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedCar(event.target.value);
-  };
+  const [nodes, setNodes] = useState(initialNodes);
 
   const houseColorMap: Record<string, string> = {
     B1: "#ff5733",
@@ -31,109 +21,100 @@ export default function Home() {
     B12: "#33a5ff",
   };
 
-  const getBackgroundColor = () => {
-    // ถ้า value เป็น code สีตรงๆ ก็ใช้ได้เลย
-    if (selectedCar.startsWith("#")) return selectedCar;
-
-    // ถ้า value เป็นชื่อบ้าน → map เป็นสี
-    return houseColorMap[selectedCar] || "transparent";
+  const handleValueChange = (index: number, newValue: string) => {
+    const updated = [...nodes];
+    updated[index].value = newValue;
+    setNodes(updated);
   };
 
-  // const CarSelector = () => {
-  //   // สร้าง state สำหรับเก็บค่าที่เลือก
-  //   const [selectedCar1, setSelectedCar1] = useState<string>('');
-
-  //   // ฟังก์ชันสำหรับจัดการการเปลี่ยนแปลงของการเลือก
-  //   const handleCarChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-  //     setSelectedCar1(event.target.value);
-  //   };
+  const handleCarChange = (index: number, newCar: string) => {
+    const updated = [...nodes];
+    updated[index].selectedCar = newCar;
+    setNodes(updated);
+  };
 
   return (
     <>
-      <div className="text-3xl font-bold">Biggame 2025 Demo ver.</div>
-      <li>map ยังไม่final</li>
-      <li>rule ยังไม่final</li>
+      <div className="text-3xl font-bold mb-4">Biggame 2025 Demo ver.</div>
+      <ul className="mb-4 list-disc list-inside">
+        <li>map ยังไม่ final</li>
+        <li>rule ยังไม่ final</li>
+      </ul>
 
-      <div className="relative w-full">
+      {/* 🗺️ Map Section */}
+      <div className="relative w-full mb-10">
         <div className="w-full text-center">
           <img
             src="/map.png"
-            alt="คำอธิบายรูป"
+            alt="map"
             className="inline-block w-[90%] h-auto"
           />
         </div>
-        <div
-          style={{
-            // position: "absolute",
-            // top: "500px",
-            // left: "20px",
-            backgroundColor: getBackgroundColor(),
-            fontSize: "1vw", // ขนาดตัวอักษรสัมพันธ์กับขนาดจอ / ภาพ
-            padding: "0.5em",
-            borderRadius: "0.5em",
-            whiteSpace: "nowrap",
-          }}
-          className="absolute top-[45%] left-[30%] p-2 rounded-md transform -translate-x-1/2 -translate-y-1/2 text-[clamp(10px,2.5vw,16px)]"
-        >
-          {value1} ( {selectedCar} )
-        </div>
-      </div>
-      {/* ///////////////////// */}
 
-      <div className="py-4 max-w-[900px] w-full overflow-auto">
+        {nodes.map((node, index) => (
+          <div
+            key={index}
+            style={{
+              backgroundColor: houseColorMap[node.selectedCar] || "transparent",
+              fontSize: "1vw",
+              padding: "0.5em",
+              borderRadius: "0.5em",
+              whiteSpace: "nowrap",
+              top: node.top,
+              left: node.left,
+            }}
+            className="absolute p-2 rounded-md transform -translate-x-1/2 -translate-y-1/2 text-[clamp(10px,2.5vw,16px)]"
+          >
+            {node.value} ({node.selectedCar})
+          </div>
+        ))}
+      </div>
+
+      {/* 📋 Table Section */}
+      <div className="py-4 max-w-[900px] w-full overflow-auto mx-auto">
         <table className="whitespace-nowrap min-w-full border-collapse border border-gray-300">
           <thead className="bg-gray-100">
             <tr>
-              <th>node</th>
-              <th>people</th>
-              <th>node</th>
-              <th>ป้อม</th>
-              <th>เรือ</th>
+              <th className="px-4 py-2">node</th>
+              <th className="px-4 py-2">จำนวนคน</th>
+              <th className="px-4 py-2">บ้าน</th>
+              <th className="px-4 py-2">ป้อม</th>
+              <th className="px-4 py-2">เรือ</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Node 1</td>
-              <td>
-                <fieldset className="fieldset">
-                  {/* <legend className="fieldset-legend">Node 1</legend> */}
+            {nodes.map((node, index) => (
+              <tr key={index}>
+                <td className="border px-4 py-2">{node.id}</td>
+                <td className="border px-4 py-2">
                   <input
                     type="text"
-                    className="input"
-                    placeholder="My awesome page"
-                    value={value1}
-                    onChange={(e) => setValue1(e.target.value)}
+                    className="input border px-2 py-1 w-full"
+                    placeholder="จำนวนคน"
+                    value={node.value}
+                    onChange={(e) =>
+                      handleValueChange(index, e.target.value)
+                    }
                   />
-                  {/* <p className="label">Temporary</p> */}
-                </fieldset>
-              </td>
-              <td>
-                <label className="select">
-                  <span className="label">Color</span>
-                  <select value={selectedCar} onChange={handleCarChange}>
+                </td>
+                <td className="border px-4 py-2">
+                  <select
+                    className="select border px-2 py-1 w-full"
+                    value={node.selectedCar}
+                    onChange={(e) => handleCarChange(index, e.target.value)}
+                  >
                     <option value="">Null</option>
-                    <option value="B1">B1</option>
-                    <option value="B2">B2</option>
-                    <option value="B3">B3</option>
-                    <option value="B4">B4</option>
-                    <option value="B5">B5</option>
-                    <option value="B6">B6</option>
-                    <option value="B7">B7</option>
-                    <option value="B8">B8</option>
-                    <option value="B9">B9</option>
-                    <option value="B10">B10</option>
-                    <option value="B11">B11</option>
-                    <option value="B12">B12</option>
+                    {Object.keys(houseColorMap).map((house) => (
+                      <option key={house} value={house}>
+                        {house}
+                      </option>
+                    ))}
                   </select>
-                </label>
-              </td>
-              <td>
-                null
-              </td>
-              <td>
-                null
-              </td>
-            </tr>
+                </td>
+                <td className="border px-4 py-2">{node.tower ?? "null"}</td>
+                <td className="border px-4 py-2">{node.ship ?? "null"}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
