@@ -21,6 +21,14 @@ export default function Home() {
     B12: "#33a5ff",
   };
 
+  const toggleTower = (id: string) => {
+    setNodes((prev) =>
+      prev.map((node) =>
+        node.id === id ? { ...node, tower: !node.tower } : node
+      )
+    );
+  };
+
   const handleValueChange = (index: number, newValue: string) => {
     const updated = [...nodes];
     updated[index].value = newValue;
@@ -68,6 +76,26 @@ export default function Home() {
             {node.value} ({node.selectedCar})
           </div>
         ))}
+        {nodes.map((node) => (
+          <React.Fragment key={node.id}>
+            {/* ป้อม */}
+            <img
+              src="/fortress.svg"
+              alt="map"
+              className="absolute border-white"
+              style={{
+                top: `${parseFloat(node.top) + 3}%`,
+                left: node.left,
+                opacity: node.tower ? 1 : 0.2,
+                transform: "translate(-50%, -50%)",
+                transition: "opacity 0.3s",
+                zIndex: 10,
+                width:"3vw",
+                height:"3vw",
+              }}
+            ></img>
+          </React.Fragment>
+        ))}
       </div>
 
       {/* 📋 Table Section */}
@@ -92,9 +120,7 @@ export default function Home() {
                     className="input border px-2 py-1 w-full"
                     placeholder="จำนวนคน"
                     value={node.value}
-                    onChange={(e) =>
-                      handleValueChange(index, e.target.value)
-                    }
+                    onChange={(e) => handleValueChange(index, e.target.value)}
                   />
                 </td>
                 <td className="border px-4 py-2">
@@ -111,7 +137,16 @@ export default function Home() {
                     ))}
                   </select>
                 </td>
-                <td className="border px-4 py-2">{node.tower ?? "null"}</td>
+                <td>
+                  <button
+                    className={`px-2 py-1 rounded ${
+                      node.tower ? "bg-green-300" : "bg-gray-200"
+                    }`}
+                    onClick={() => toggleTower(node.id)}
+                  >
+                    {node.tower ? "🛡️ ปิดป้อม" : "⚔️ เปิดป้อม"}
+                  </button>
+                </td>
                 <td className="border px-4 py-2">{node.ship ?? "null"}</td>
               </tr>
             ))}

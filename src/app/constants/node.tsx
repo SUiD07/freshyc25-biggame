@@ -5,7 +5,7 @@ export const initialNodes = [
       selectedCar: "",
       top: "45%",
       left: "30%",
-      tower: null,
+      tower: false,
       ship: null,
     },
     {
@@ -14,7 +14,7 @@ export const initialNodes = [
       selectedCar: "",
       top: "60%",
       left: "50%",
-      tower: null,
+      tower: false,
       ship: null,
     },
     {
@@ -23,7 +23,7 @@ export const initialNodes = [
       selectedCar: "",
       top: "20%",
       left: "70%",
-      tower: null,
+      tower: false,
       ship: null,
     },
   ];
