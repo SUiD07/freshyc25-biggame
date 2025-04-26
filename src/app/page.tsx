@@ -2,6 +2,7 @@
 import { useState } from "react";
 import React from "react";
 import { initialNodes } from "./constants/node";
+import Navbar from "./components/Navbar";
 
 export default function Home() {
   const [nodes, setNodes] = useState(initialNodes);
@@ -48,7 +49,9 @@ export default function Home() {
         node.id === id
           ? {
               ...node,
-              ship: node.ship ? [...node.ship, `${selectedCar}`] : [`Ship 1 from ${selectedCar}`],
+              ship: node.ship
+                ? [...node.ship, `${selectedCar}`]
+                : [`Ship 1 from ${selectedCar}`],
             }
           : node
       )
@@ -62,7 +65,8 @@ export default function Home() {
         node.id === id
           ? {
               ...node,
-              ship: node.ship && node.ship.length > 1 ? node.ship.slice(0, -1) : [], // ถ้ามีเรือมากกว่าหนึ่งลำให้ลบลำสุดท้าย
+              ship:
+                node.ship && node.ship.length > 1 ? node.ship.slice(0, -1) : [], // ถ้ามีเรือมากกว่าหนึ่งลำให้ลบลำสุดท้าย
             }
           : node
       )
@@ -71,7 +75,8 @@ export default function Home() {
 
   return (
     <>
-      <div className="text-3xl font-bold mb-4">Biggame 2025 Demo ver.</div>
+      <Navbar />
+      {/* <div className="text-3xl font-bold mb-4">Biggame 2025 Demo ver.</div> */}
       <ul className="mb-4 list-disc list-inside">
         <li>map ยังไม่ final</li>
         <li>rule ยังไม่ final</li>
@@ -123,19 +128,24 @@ export default function Home() {
               }}
             />
             {/* เรือ */}
-            {node.ship && node.ship.map((ship, index) => (
-              <div
-                key={index}
-                className="absolute w-8 h-8 bg-blue-500 rounded-full border-2 border-white"
-                style={{
-                  top: `${parseFloat(node.top) + 8 + index * 4}%`, // Adjust position for multiple ships
-                  left: node.left,
-                  transform: "translate(-50%, -50%)",
-                }}
-              >
-                <div className="text-center text-black text-xs">{ship}</div>
-              </div>
-            ))}
+            {node.ship &&
+              node.ship.map((ship, index) => (
+                <div
+                  key={index}
+                  className="absolute"
+                  style={{
+                    top: node.top, // ปรับตำแหน่งตามจำนวนเรือ
+                    left: `${parseFloat(node.left) -4 + index * 2}%`,
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  <img src="/boat.svg" alt="ship" className="w-8 h-8" />
+                  <div className="text-center text-black text-xs mt-1">
+                    {ship}
+                  </div>
+                </div>
+              ))}
+
             {/* ข้อความใต้ภาพเรือ */}
             {/* {node.ship && node.ship.map((ship, index) => (
               <div
@@ -196,7 +206,9 @@ export default function Home() {
                 </td>
                 <td>
                   <button
-                    className={`px-2 py-1 rounded ${node.tower ? "bg-green-300" : "bg-gray-200"}`}
+                    className={`px-2 py-1 rounded ${
+                      node.tower ? "bg-green-300" : "bg-gray-200"
+                    }`}
                     onClick={() => toggleTower(node.id)}
                   >
                     {node.tower ? "🛡️ ปิดป้อม" : "⚔️ เปิดป้อม"}
@@ -204,17 +216,18 @@ export default function Home() {
                 </td>
                 <td>
                   <div className="flex flex-col">
-                    {node.ship && node.ship.map((ship, index) => (
-                      <div key={index} className="px-2 py-1 text-sm">
-                        {ship}
-                      </div>
-                    ))}
+                    {node.ship &&
+                      node.ship.map((ship, index) => (
+                        <div key={index} className="px-2 py-1 text-sm">
+                          {ship}
+                        </div>
+                      ))}
                   </div>
                 </td>
-                <td>
+                <td className="space-x-2">
                   {/* Select สำหรับเลือกบ้านที่จะเพิ่มเรือจาก */}
                   <select
-                    className="select border px-2 py-1 w-full"
+                    className="select border px-2 py-1 w-[150px]"
                     onChange={(e) => addShip(node.id, e.target.value)}
                   >
                     <option value="">เลือกบ้านสำหรับเรือ</option>
