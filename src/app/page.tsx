@@ -137,10 +137,8 @@ export default function Home() {
             className="absolute p-2 rounded-md transform -translate-x-1/2 -translate-y-1/2 text-[clamp(10px,2.5vw,16px)]"
           >
             {node.value} {node.value !== "0" && "("}
-
             {node.selectedCar}
             {node.value !== "0" && ")"}
-
           </div>
         ))}
 
@@ -259,22 +257,18 @@ export default function Home() {
                     ))}
                   </select>
                 </td>
-                <td className="border px-4 py-2">
-                  <div className="flex flex-col space-y-2">
-                    {node.fight &&
-                      node.fight.map((f, idx) => (
-                        <div key={idx} className="text-xs">
-                          {f.house} ({f.count})
-                        </div>
-                      ))}
-                    {/* เพิ่มฟอร์มเลือกบ้านและจำนวน */}
-                    <div className="flex space-x-1 mt-1">
+                <td className="border px-4 py-2 space-y-2">
+                  {node.fight.map((f, fIndex) => (
+                    <div key={fIndex} className="flex items-center space-x-2">
                       <select
-                        className="select border px-2 py-1"
+                        value={f.house}
                         onChange={(e) => {
-                          const house = e.target.value;
-                          if (house) addFight(node.id, house, 1);
+                          const updatedNodes = [...nodes];
+                          updatedNodes[index].fight[fIndex].house =
+                            e.target.value;
+                          setNodes(updatedNodes);
                         }}
+                        className="border px-2 py-1 w-24"
                       >
                         <option value="">เลือกบ้าน</option>
                         {Object.keys(houseColorMap).map((house) => (
@@ -283,41 +277,43 @@ export default function Home() {
                           </option>
                         ))}
                       </select>
+
                       <input
                         type="number"
-                        min="1"
-                        defaultValue={1}
-                        className="input border px-2 py-1 w-16"
-                        onBlur={(e) => {
-                          const count = parseInt(e.target.value);
-                          if (
-                            !isNaN(count) &&
-                            node.fight &&
-                            node.fight.length > 0
-                          ) {
-                            const updated = [...nodes];
-                            const idx = updated.findIndex(
-                              (n) => n.id === node.id
-                            );
-                            if (idx !== -1) {
-                              updated[idx].fight[
-                                updated[idx].fight.length - 1
-                              ].count = count;
-                              setNodes(updated);
-                            }
-                          }
+                        value={f.count}
+                        onChange={(e) => {
+                          const updatedNodes = [...nodes];
+                          updatedNodes[index].fight[fIndex].count =
+                            parseInt(e.target.value) || 0;
+                          setNodes(updatedNodes);
                         }}
+                        className="border px-2 py-1 w-16"
+                        placeholder="จำนวน"
                       />
-                    </div>
-                    {node.fight && node.fight.length > 0 && (
+
                       <button
-                        className="px-2 py-1 bg-red-200 rounded mt-2 text-xs"
-                        onClick={() => removeFight(node.id)}
+                        className="bg-red-300 px-2 py-1 rounded"
+                        onClick={() => {
+                          const updatedNodes = [...nodes];
+                          updatedNodes[index].fight.splice(fIndex, 1);
+                          setNodes(updatedNodes);
+                        }}
                       >
-                        ลดการสู้
+                        ❌
                       </button>
-                    )}
-                  </div>
+                    </div>
+                  ))}
+
+                  <button
+                    className="bg-blue-300 px-2 py-1 rounded mt-2"
+                    onClick={() => {
+                      const updatedNodes = [...nodes];
+                      updatedNodes[index].fight.push({ house: "", count: 0 });
+                      setNodes(updatedNodes);
+                    }}
+                  >
+                    ➕ เพิ่ม fight
+                  </button>
                 </td>
                 <td className="border px-4 py-2">
                   <button
