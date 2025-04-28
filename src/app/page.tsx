@@ -8,18 +8,18 @@ export default function Home() {
   const [nodes, setNodes] = useState(initialNodes);
 
   const houseColorMap: Record<string, string> = {
-    B1: "#ff5733",
-    B2: "#fffc33",
-    B3: "#33ff57",
-    B4: "#33fff5",
-    B5: "#3357ff",
-    B6: "#8e33ff",
-    B7: "#ff33ec",
-    B8: "#ff3380",
-    B9: "#ffa533",
-    B10: "#a5ff33",
-    B11: "#33ffa5",
-    B12: "#33a5ff",
+    B1: "#c00000",
+    B2: "#ff6600",
+    B3: "#936f01",
+    B4: "#ffff00",
+    B5: "#92d14f",
+    B6: "#00af51",
+    B7: "#01b0f1",
+    B8: "#0070c0",
+    B9: "#abb9ca",
+    B10: "#7030a0",
+    B11: "#ff66ff",
+    B12: "#ffffff",
   };
 
   const toggleTower = (id: string) => {
@@ -131,14 +131,32 @@ export default function Home() {
               padding: "0.5em",
               borderRadius: "0.5em",
               whiteSpace: "nowrap",
+              top:`${parseFloat(node.top)+5}%`,
+              left: node.left,
+            }}
+            className="absolute p-2 rounded-md transform -translate-x-1/2 -translate-y-1/2 text-[clamp(10px,2.5vw,16px)]"
+          >
+            {node.value} 
+            {/* {node.value !== "0" && "("} */}
+            {/* {node.selectedCar}
+            {node.value !== "0" && ")"} */}
+          </div>
+        ))}
+        {/* node number */}
+        {nodes.map((node, index) => (
+          <div
+            key={index}
+            style={{
+              fontSize: "1vw",
+              padding: "0.5em",
+              borderRadius: "0.5em",
+              whiteSpace: "nowrap",
               top: node.top,
               left: node.left,
             }}
             className="absolute p-2 rounded-md transform -translate-x-1/2 -translate-y-1/2 text-[clamp(10px,2.5vw,16px)]"
           >
-            {node.value} {node.value !== "0" && "("}
-            {node.selectedCar}
-            {node.value !== "0" && ")"}
+            {node.id}
           </div>
         ))}
 
@@ -151,7 +169,7 @@ export default function Home() {
               className="absolute"
               style={{
                 top: node.top,
-                left: `${parseFloat(node.left) -3}%`,
+                left: `${parseFloat(node.left) -1.9}%`,
                 opacity: node.tower ? 1 : 0,
                 transform: "translate(-50%, -50%)",
                 transition: "opacity 0.3s",
@@ -197,11 +215,11 @@ export default function Home() {
                       alt="fight"
                       className="w-8 h-8 absolute"
                       style={{
-                        top: `${parseFloat(node.top) + 1 + idx * 2}%`,
-                        left: `${parseFloat(node.left) + 2}%`,
+                        top: `${parseFloat(node.top) + idx * 2}%`,
+                        left: `${parseFloat(node.left) + 3}%`,
                         transform: "translate(-50%, -50%)",
-                        width: "3vw",
-                        height: "3vw",
+                        width: "1.7vw",
+                        height: "1.7vw",
                       }}
                     />
                   )}
@@ -209,8 +227,8 @@ export default function Home() {
                     key={idx}
                     className="absolute"
                     style={{
-                      top: `${parseFloat(node.top) + 5 + idx * 2}%`,
-                      left: `${parseFloat(node.left) + 2}%`,
+                      top: `${parseFloat(node.top) + 1.7 + idx * 2}%`,
+                      left: `${parseFloat(node.left) + 3}%`,
                       transform: "translate(-50%, -50%)",
                     }}
                   >
@@ -228,7 +246,7 @@ export default function Home() {
       </div>
 
       {/* 📋 Table Section */}
-      <div className="py-4 max-w-[900px] w-full overflow-auto mx-auto">
+      <div className="py-4 max-w-[900px] max-h-[400px] w-full overflow-auto mx-auto">
         <table className="whitespace-nowrap min-w-full border-collapse border border-gray-300">
           <thead className="bg-gray-100">
             <tr>
