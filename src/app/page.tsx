@@ -128,13 +128,14 @@ export default function Home() {
             style={{
               backgroundColor: houseColorMap[node.selectedCar] || "transparent",
               fontSize: "1vw",
-              padding: "0.5em",
-              borderRadius: "0.5em",
+              padding: "0.3em",
+              // borderRadius: "0.5em",
               whiteSpace: "nowrap",
-              top:`${parseFloat(node.top)+5}%`,
+              top:`${parseFloat(node.top)+4}%`,
               left: node.left,
+              width:"3em"
             }}
-            className="absolute p-2 rounded-md transform -translate-x-1/2 -translate-y-1/2 text-[clamp(10px,2.5vw,16px)]"
+            className="text-center absolute p-2 transform -translate-x-1/2 -translate-y-1/2 text-[clamp(10px,2.5vw,16px)]"
           >
             {node.value} 
             {/* {node.value !== "0" && "("} */}
