@@ -121,7 +121,7 @@ export default function Home() {
             className="inline-block w-[90%] h-auto"
           />
         </div>
-
+        {/* node */}
         {nodes.map((node, index) => (
           <div
             key={index}
@@ -150,8 +150,8 @@ export default function Home() {
               alt="fortress"
               className="absolute"
               style={{
-                top: `${parseFloat(node.top) + 3}%`,
-                left: node.left,
+                top: node.top,
+                left: `${parseFloat(node.left) -3}%`,
                 opacity: node.tower ? 1 : 0,
                 transform: "translate(-50%, -50%)",
                 transition: "opacity 0.3s",
@@ -167,15 +167,23 @@ export default function Home() {
                   key={index}
                   className="absolute"
                   style={{
-                    top: node.top,
-                    left: `${parseFloat(node.left) - 4 + index * 2}%`,
+                    top:`${parseFloat(node.top)-6}%`,
+                    left: `${parseFloat(node.left) + index * 2}%`,
                     transform: "translate(-50%, -50%)",
                   }}
                 >
-                  <img src="/boat.svg" alt="ship" className="w-8 h-8" />
-                  <div className="text-center text-black text-xs mt-1">
+                  <div
+                    className="text-center text-black text-xs mt-1"
+                    style={{ fontSize: "1vw", padding: "0em" }}
+                  >
                     {ship}
                   </div>
+                  <img
+                    src="/boat.svg"
+                    alt="ship"
+                    className="w-8 h-8"
+                    style={{ width: "3vw", height: "3vw" }}
+                  />
                 </div>
               ))}
 
@@ -190,7 +198,7 @@ export default function Home() {
                       className="w-8 h-8 absolute"
                       style={{
                         top: `${parseFloat(node.top) + 1 + idx * 2}%`,
-                        left: `${parseFloat(node.left) + 5}%`,
+                        left: `${parseFloat(node.left) + 2}%`,
                         transform: "translate(-50%, -50%)",
                         width: "3vw",
                         height: "3vw",
@@ -202,11 +210,14 @@ export default function Home() {
                     className="absolute"
                     style={{
                       top: `${parseFloat(node.top) + 5 + idx * 2}%`,
-                      left: `${parseFloat(node.left) + 5}%`,
+                      left: `${parseFloat(node.left) + 2}%`,
                       transform: "translate(-50%, -50%)",
                     }}
                   >
-                    <div className="text-center text-red-600 font-bold text-xs mt-1">
+                    <div
+                      className="text-center text-red-600 font-bold text-xs mt-1"
+                      style={{ fontSize: "1vw" }}
+                    >
                       {f.house} ({f.count})
                     </div>
                   </div>
