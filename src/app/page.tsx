@@ -116,7 +116,7 @@ export default function Home() {
       <div className="relative w-full mb-10">
         <div className="w-full text-center">
           <img
-            src="/maptemp.jpg"
+            src="/mapFinalReal.png"
             alt="map"
             className="inline-block w-[90%] h-auto"
           />
